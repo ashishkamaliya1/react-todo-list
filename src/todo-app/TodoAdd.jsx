@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { useTodos } from "./TodoContext.jsx";
 import styles from "../assets/TodoList.module.css";
 
-function TodoAdd({ todoDetail }) {
-    const [dueText, setText] = useState(""); // Text input
-    const [dueDate, setDate] = useState(""); // Date input
+function TodoAdd() {
+    const { addTodo } = useTodos();
+    const [title, setTitle] = useState("");
+    const [dueDate, setDueDate] = useState("");
 
     const handleAdd = () => {
-        if (dueText && dueDate) {
-            todoDetail(dueText, dueDate); // Parent function call
-            setText(""); // Clear text input
-            setDate(""); // Clear date input
+        if (title && dueDate) {
+            addTodo(title, dueDate);
+            setTitle("");
+            setDueDate("");
         }
     };
 
@@ -19,18 +21,18 @@ function TodoAdd({ todoDetail }) {
                 <input
                     type="text"
                     className={styles.input}
-                    placeholder="Enter todo name"
-                    aria-label="Todo name"
-                    value={dueText}
-                    onChange={(e) => setText(e.target.value)}
+                    placeholder="Enter title"
+                    aria-label="Todo title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
 
                 <input
                     type="date"
                     className={styles.date}
-                    aria-label="Todo date"
+                    aria-label="Due date"
                     value={dueDate}
-                    onChange={(e) => setDate(e.target.value)}
+                    onChange={(e) => setDueDate(e.target.value)}
                 />
 
                 <button className={styles.btn} onClick={handleAdd}>Add</button>
